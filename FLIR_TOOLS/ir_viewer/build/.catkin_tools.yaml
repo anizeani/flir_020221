@@ -1,6 +1,0 @@
-devel_space: /home/ev/FLIR_tools/ir_viewer/devel
-install: false
-install_space: /home/ev/FLIR_tools/ir_viewer/install
-profile: default
-source_space: /home/ev/FLIR_tools/ir_viewer/src
-workspace: /home/ev/FLIR_tools/ir_viewer

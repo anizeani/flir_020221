@@ -1,0 +1,25 @@
+<launch>
+
+    <arg name="image_topic" default="/image_republisher/ir/image_mono16" />
+    <arg name="storage_folder" default="/home/asl" />
+    <arg name="rosbag_file" default="/d/projects/rega/misc/rosbags/all_trimmed_10s.bag" />
+
+    <param name="/ir_save_path" type="str" value="$(arg storage_folder)"/>
+
+    <node 
+    name="ir_saving" 
+    pkg="ir_extractor" 
+    type="ir_saver" 
+    output="screen"
+    required="true">
+        <remap from="image" to="$(arg image_topic)" />
+    </node>
+
+    <node 
+    name="rosbag_play" 
+    pkg="rosbag" 
+    type="play" 
+    required="true"
+    args="$(arg rosbag_file)" />
+
+</launch>

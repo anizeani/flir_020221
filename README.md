@@ -22,4 +22,4 @@ INSTALL
 Usage
 ######
 1. source flir_tools_ws/devel/setup.bash
-2. roslaunch flir_tools_ws/src/FLIR_TOOLS/ir_viewer/launch/extract_falsecolor_ir.launch image_topic:="/img_topic/from/rosbag" storage_folder:="/path/to/save/pictures" rosbag_file:="/path/to/rosbag.bag"
+2. roslaunch ir_extractor extract_falsecolor_ir.launch image_topic:="/img_topic/from/rosbag" storage_folder:="/path/to/save/pictures" rosbag_file:="/path/to/rosbag.bag"
