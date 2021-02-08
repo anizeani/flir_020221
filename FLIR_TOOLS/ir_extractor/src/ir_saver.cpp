@@ -94,7 +94,7 @@ void imageCallback(std::string &path, const sensor_msgs::ImageConstPtr& msg) {
     }else{
       img_mono8.copyTo(dst_tl);
     }
-    std::string filename = std::to_string(msg->header.stamp.toNSec()) + ".png"
+    std::string filename = std::to_string(msg->header.stamp.toNSec()) + ".png";
     cv::imwrite(path + "/" + filename , fullImg);
   }
 
