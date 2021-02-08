@@ -26,5 +26,5 @@
   <run_depend>std_msgs</run_depend>
   <run_depend>image_transport</run_depend>
   <run_depend>gtk2</run_depend>
-
+  <run_depend>image_view</run_depend>
 </package>
