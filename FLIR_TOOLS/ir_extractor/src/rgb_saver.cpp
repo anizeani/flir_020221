@@ -59,16 +59,14 @@ void imageCallback(std::string &path, const sensor_msgs::ImageConstPtr& msg) {
 
 #if ROS_VERSION_MINIMUM(ROS_MIN_MAJOR, ROS_MIN_MINOR, ROS_MIN_PATCH)
     cv_bridge::CvImagePtr ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
-    // cv_bridge::CvImagePtr ptr = cv_bridge::toCvCopy(msg, "bgr8");
+    // cv_bridge::CvImagePtr ptr = cv_bridge::toCvCopy(msg);
     cv::Mat img =ptr->image.clone();
 #else
-    cv::Mat img = bridge.imgMsgToCv(msg, "bgr8");
+    cv::Mat img = bridge.imgMsgToCv(msg);
 #endif
-    // display
-    cv::Mat fullImg(img.rows, img.cols, CV_8UC3);
 
     std::string filename = std::to_string(msg->header.stamp.toNSec()) + ".png";
-    cv::imwrite(path + "/" + filename , fullImg);
+    cv::imwrite(path + "/" + filename , img);
   }
 
 #if ROS_VERSION_MINIMUM(ROS_MIN_MAJOR, ROS_MIN_MINOR, ROS_MIN_PATCH)
