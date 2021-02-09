@@ -1,8 +1,8 @@
 <launch>
 
-    <arg name="image_topic" default="/image_republisher/ir/image_mono16" />
-    <arg name="storage_folder" default="/home/asl" />
-    <arg name="rosbag_file" default="/d/projects/rega/misc/rosbags/all_trimmed_10s.bag" />
+    <arg name="image_topic" default="/vi_sync/flir" />
+    <arg name="storage_folder" default="/mnt/c/Users/Eran/Desktop/rosbagFiles/davos_flir" />
+    <arg name="rosbag_file" default="/mnt/c/Users/Eran/Desktop/rosbagFiles/FLIGHT_rega_2018-06-21-13-29-16_4.bag" />
 
     <param name="/ir_save_path" type="str" value="$(arg storage_folder)"/>
 
