@@ -48,8 +48,6 @@
 #include <cv_bridge/CvBridge.h>
 #endif
 
-#include <falsecolor.h>
-
 void imageCallback(std::string &path, const sensor_msgs::ImageConstPtr& msg) {
 #if ROS_VERSION_MINIMUM(ROS_MIN_MAJOR, ROS_MIN_MINOR, ROS_MIN_PATCH)
 #else
@@ -60,38 +58,15 @@ void imageCallback(std::string &path, const sensor_msgs::ImageConstPtr& msg) {
     // get image
 
 #if ROS_VERSION_MINIMUM(ROS_MIN_MAJOR, ROS_MIN_MINOR, ROS_MIN_PATCH)
-    cv_bridge::CvImagePtr ptr = cv_bridge::toCvCopy(msg, "mono16");
-    cv::Mat img = ptr->image;
+    cv_bridge::CvImagePtr ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
+    // cv_bridge::CvImagePtr ptr = cv_bridge::toCvCopy(msg, "bgr8");
+    cv::Mat img =ptr->image.clone();
 #else
-    cv::Mat img = bridge.imgMsgToCv(msg, "mono16");
+    cv::Mat img = bridge.imgMsgToCv(msg, "bgr8");
 #endif
-
-    //convert 8 bit and false color conversion
-    static bool dofalsecolor = true;
-    static bool doTempScaling = false;
-
-    cv::Mat img_mono8_ir, img_mono8;
-    img_mono8_ir.create(img.rows, img.cols, CV_8UC1);
-
-    converter_16_8::Instance().convert_to8bit(img, img_mono8_ir, doTempScaling);
-
-    if (dofalsecolor) {
-      convertFalseColor(img_mono8_ir, img_mono8, palette::False_color_palette4, doTempScaling,
-                        converter_16_8::Instance().getMin(), converter_16_8::Instance().getMax());
-    } else {
-      img_mono8 = img_mono8_ir;
-    }
-
     // display
     cv::Mat fullImg(img.rows, img.cols, CV_8UC3);
-    cv::Mat dst_tl = fullImg(cv::Rect(0, 0, img.cols, img.rows));
-    cv::Mat img_monorgb;
-    if(img_mono8.type() == CV_8UC1){
-      cv::cvtColor(img_mono8, img_monorgb, CV_GRAY2BGR);
-      img_monorgb.copyTo(dst_tl);
-    }else{
-      img_mono8.copyTo(dst_tl);
-    }
+
     std::string filename = std::to_string(msg->header.stamp.toNSec()) + ".png";
     cv::imwrite(path + "/" + filename , fullImg);
   }
@@ -108,10 +83,10 @@ void imageCallback(std::string &path, const sensor_msgs::ImageConstPtr& msg) {
 
 
 int main(int argc, char **argv) {
-  ros::init(argc, argv, "ir_saver");
+  ros::init(argc, argv, "rgb_saver");
   ros::NodeHandle nh;
   std::string path;
-  nh.getParam("/ir_save_path", path);
+  nh.getParam("/rgb_save_path", path);
   ros::Subscriber sub = nh.subscribe<sensor_msgs::Image>("image", 1, boost::bind(&imageCallback, boost::ref(path), _1));
   ros::spin();
 

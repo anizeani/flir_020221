@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <package>
-  <name>ir_extractor</name>
+  <name>ir_rgb_extractor</name>
   <version>0.0.1</version>
   <description>
 
-	ros extractor for infrared images
+	ros extractor for ir and rgb images
 
   </description>
   <url>http://www.asl.ethz.com</url>

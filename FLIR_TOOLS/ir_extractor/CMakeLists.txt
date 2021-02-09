@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(ir_extractor)
+project(ir_rgb_extractor)
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp 
@@ -38,4 +38,8 @@ target_link_libraries(ir_saver ${catkin_LIBRARIES}
                                 ${OpenCV_LIBRARIES}
                                  false_color)
 
-                                
+add_executable(rgb_saver src/rgb_saver.cpp)
+
+target_link_libraries(rgb_saver 
+                      ${catkin_LIBRARIES} 
+                      ${OpenCV_LIBRARIES})
